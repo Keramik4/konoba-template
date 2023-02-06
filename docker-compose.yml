@@ -1,0 +1,21 @@
+version: "1"
+
+services:
+  pocketbase:
+    container_name: pocketbase
+    build:
+      context: .
+      dockerfile: Dockerfile.pocketbase
+    restart: unless-stopped
+    volumes:
+      - pocketbase-data:/pb_data
+      - pocketbase-data:/pb_public
+    networks:
+      - my-network
+    ports:
+      - 8090:8090
+networks:
+  my-network:
+    name: my-network
+volumes:
+  pocketbase-data:
