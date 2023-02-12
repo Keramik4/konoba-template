@@ -14,6 +14,8 @@ RUN chown pocketbase:pocketbase /usr/local/bin/pocketbase
 RUN chown pocketbase:pocketbase /pb_data
 RUN chmod 710 /usr/local/bin/pocketbase
 
+#copy backup content
+# ADD pb-content/pb_data /pb_data
 
 
 VOLUME /pb_data

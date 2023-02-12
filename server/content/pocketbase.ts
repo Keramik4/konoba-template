@@ -1,22 +1,14 @@
 import PocketBase from "pocketbase"
+import { getConfig } from "./config"
 
-export const fetchAllContent = async () => {
-  const pb = await initPbClient()
-
-  if (!pb) return null
-
-  const food = await fetchListOfFood(pb)
-  return food
-}
-
-const initPbClient = async () => {
+export const initPbClient = async () => {
   const { PB_EMAIL, PB_PASS } = process.env
 
   try {
     if (!isString(PB_EMAIL) || !isString(PB_PASS)) {
-      throw new Error("Envariable variables are missing: PB_EMAIL, PB_PASS")
+      throw new Error("Env variables are missing: PB_EMAIL, PB_PASS")
     }
-    const pb = new PocketBase("http://0.0.0.0:8090")
+    const pb = new PocketBase(getConfig("apiUrl"))
 
     await pb.admins.authWithPassword(PB_EMAIL, PB_PASS)
     return pb
@@ -28,10 +20,4 @@ const initPbClient = async () => {
 
 const isString = (envVar: string | undefined): envVar is string => {
   return typeof envVar == "string"
-}
-
-const fetchListOfFood = async (pb: PocketBase) => {
-  const list = await pb.collection("food").getList(1, 100)
-
-  return list
 }
