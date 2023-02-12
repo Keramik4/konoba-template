@@ -1,12 +1,10 @@
 import Head from "next/head"
 import { useEffect } from "react"
-import { fetchAllContent } from "../server/content"
 
-type PageProps = {
+type HomePageProps = {
   pass: string
-  content: any
 }
-export default function Home(props: PageProps) {
+export default function Home(props: HomePageProps) {
   useEffect(() => {
     //@ts-ignore
     window.props = props
@@ -23,11 +21,9 @@ export default function Home(props: PageProps) {
 }
 
 export const getStaticProps = async () => {
-  const content = await fetchAllContent()
   return {
     props: {
       pass: process.env.PB_EMAIL || "",
-      content,
     },
   }
 }
