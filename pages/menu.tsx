@@ -1,27 +1,26 @@
 import Head from "next/head"
-import { useEffect } from "react"
 import { getMenuPage } from "../server/content"
+import type { FoodSection } from "../server/content"
+import { Menu } from "../components/menu"
 
 type MenuPageProps = {
-  content: any
+  food: FoodSection[]
 }
-export default function Home(props: MenuPageProps) {
-  useEffect(() => {
-    //@ts-ignore
-    window.props = props
-  })
+export default function MenuPage(props: MenuPageProps) {
+  const { food } = props
   return (
     <>
       <Head>
         <title>Konoba</title>
-        <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>HELLO</main>
+      <div>
+        <Menu sections={food} />
+      </div>
     </>
   )
 }
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
   const content = await getMenuPage()
   if (!content) {
     return {
@@ -31,16 +30,7 @@ export const getStaticProps = async () => {
 
   return {
     props: {
-      content,
+      food: content,
     },
   }
 }
-
-//todo
-// https://github.com/grommet/grommet-starter-new-app
-//add gromet to project
-//create food component
-//add content 6 food in two categories
-// add 6 drinks in 2 categories
-// create seperate page for //drink
-//and seperate page for food

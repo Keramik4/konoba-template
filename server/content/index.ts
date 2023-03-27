@@ -10,3 +10,5 @@ export const getMenuPage = async () => {
 
   return menu
 }
+
+export type { FoodSection, FoodMenuPosition } from "./menu/menu.parser"
