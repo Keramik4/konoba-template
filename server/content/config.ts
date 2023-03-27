@@ -9,5 +9,5 @@ type ContentConfig = {
 
 const config = {
   apiUrl: "http://0.0.0.0:8090",
-  thumbSize: "120x90",
+  thumbSize: "160x120",
 }

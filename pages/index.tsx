@@ -1,5 +1,6 @@
 import Head from "next/head"
 import { useEffect } from "react"
+import Button from "@mui/material/Button"
 
 type HomePageProps = {
   pass: string
@@ -15,7 +16,12 @@ export default function Home(props: HomePageProps) {
         <title>Konoba</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>HELLO</main>
+      <main>
+        HELLO
+        <Button variant="contained" color="primary" disableElevation>
+          Disable elevation
+        </Button>
+      </main>
     </>
   )
 }

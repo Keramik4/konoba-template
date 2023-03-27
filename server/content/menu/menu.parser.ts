@@ -1,15 +1,48 @@
-import type { Food } from "./menu.fetch"
+import { ListResult } from "pocketbase"
+import type { Food, FoodType } from "./menu.fetch"
 import { getConfig } from "../config"
 
-type FoodMenuPosition = {
+export type FoodSection = {
+  name: string
+  order: number
+  list: FoodMenuPosition[]
+}
+
+export type FoodMenuPosition = {
   name: string
   description: string
   prize: string
   thumbImage: string
   image: string
+  id: string
 }
 
-export const parseFood = ({
+export const parseListOfFood = (
+  listOfFood: ListResult<Food>,
+  foodTypes: ListResult<FoodType>
+): FoodSection[] => {
+  const { items } = listOfFood
+
+  const result = foodTypes.items
+    .reduce<FoodSection[]>((accumulator, current) => {
+      const foodInSection = items.filter((food) => food.type === current.id)
+
+      if (foodInSection.length === 0) return accumulator
+
+      return [
+        ...accumulator,
+        {
+          name: current.type,
+          list: foodInSection.map(parseFood),
+          order: current.order,
+        },
+      ]
+    }, [])
+    .sort((a, b) => a.order - b.order)
+  return result
+}
+
+const parseFood = ({
   name,
   description,
   prize,
@@ -25,6 +58,7 @@ export const parseFood = ({
     prize: parseMoney(prize),
     thumbImage: parseThumbImage(imagePath),
     image: imagePath,
+    id: id,
   }
 }
 
