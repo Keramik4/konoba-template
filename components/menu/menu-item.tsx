@@ -1,7 +1,6 @@
 import { FC, useState } from "react"
 import Image from "next/image"
 import styled from "@emotion/styled"
-import { useTheme } from "@mui/material/styles"
 import type { FoodMenuPosition } from "../../server/content"
 import { SubHeader, LightGrey, MainColor } from "../../styles"
 
@@ -11,7 +10,6 @@ export const MenuItem: FC<FoodMenuPosition> = ({
   prize,
   thumbImage,
 }) => {
-  const { palette } = useTheme()
   const [showAll, setShowAll] = useState(false)
   const descriptionToShow = showAll
     ? description
@@ -21,7 +19,7 @@ export const MenuItem: FC<FoodMenuPosition> = ({
     <ItemContainer>
       <div>
         <SubHeader>{name}</SubHeader>
-        <Amount color={palette.primary.main}>{prize}</Amount>
+        <Amount>{prize}</Amount>
         <Description>
           {descriptionToShow}
           {!showAll && (
