@@ -1,8 +1,6 @@
 import { FC, useState } from "react"
 import Image from "next/image"
-import styled from "@emotion/styled"
 import type { FoodMenuPosition } from "../../server/content"
-import { SubHeader, LightGrey, MainColor } from "../../styles"
 
 export const MenuItem: FC<FoodMenuPosition> = ({
   name,
@@ -16,40 +14,30 @@ export const MenuItem: FC<FoodMenuPosition> = ({
     : `${description.slice(0, 80)}...`
 
   return (
-    <ItemContainer>
+    <div className="flex p-4 justify-between border border-gray-light">
       <div>
-        <SubHeader>{name}</SubHeader>
-        <Amount>{prize}</Amount>
-        <Description>
+        <h3 className="font-bold text-xl font-serif">{name}</h3>
+        <div className="text-blue">{prize}</div>
+        <p>
           {descriptionToShow}
           {!showAll && (
-            <ShowMore onClick={() => setShowAll(true)} role="button">
+            <span
+              className="cursor-pointer font-semibold pl-1"
+              onClick={() => setShowAll(true)}
+              role="button"
+            >
               show
-            </ShowMore>
+            </span>
           )}
-        </Description>
+        </p>
       </div>
-      <Image alt={name} src={thumbImage} height={90} width={120} />
-    </ItemContainer>
+      <Image
+        alt={name}
+        src={thumbImage}
+        height={90}
+        width={120}
+        className="w-[120px] h-[90px] object-cover"
+      />
+    </div>
   )
 }
-
-const ItemContainer = styled.div`
-  padding: 16px;
-  display: flex;
-  justify-content: space-between;
-  border: 1px solid ${LightGrey};
-`
-
-const Amount = styled.div`
-  font-weight: 600;
-  color: ${MainColor};
-`
-const Description = styled.p`
-  padding-right: 4px;
-`
-const ShowMore = styled.span`
-  cursor: pointer;
-  font-weight: 600;
-  padding-left: 4px;
-`
